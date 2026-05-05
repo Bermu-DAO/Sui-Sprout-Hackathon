@@ -1,0 +1,129 @@
+.parking-space-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.parking-space-card:hover {
+  box-shadow: 0 8px 24px rgba(29, 78, 216, 0.12);
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.location-icon {
+  font-size: 1.375rem;
+}
+
+.location {
+  flex: 1;
+  font-size: 1rem;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.owner-badge {
+  background: var(--primary-surface);
+  color: var(--primary);
+  padding: 0.2rem 0.625rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.card-body {
+  margin-bottom: 1.25rem;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.625rem 0;
+  border-bottom: 1px solid var(--bg);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.value {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.875rem;
+}
+
+.monospace {
+  font-family: 'SF Mono', 'Menlo', monospace;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.sale-info {
+  background: var(--accent-light);
+  margin: 0.5rem -0.25rem 0;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.price {
+  color: var(--accent-dark);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  flex: 1;
+  padding: 0.625rem 1rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-dark);
+  box-shadow: var(--shadow-blue);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--primary-surface);
+  color: var(--primary);
+  border: 1px solid var(--border-focus);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #dbeafe;
+}

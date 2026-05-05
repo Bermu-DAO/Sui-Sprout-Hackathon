@@ -1,0 +1,2 @@
+export const PACKAGE_ID = "0xd1ffb2aecf3cb33d907cc23c3bf5ab81818ad37b87618fe881b5693da33b18c0";
+export const LOT_ID = "0x5d23094bfc4272ba373b293ce4fc5c20e90ed13e7125af54381dacca18e59b53";
