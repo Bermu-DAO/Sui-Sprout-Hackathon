@@ -1,0 +1,21 @@
+tasks/progress.md
+tasks/lessons.md
+
+# Move build artifacts
+move/baleenpay/build/
+
+# Next.js
+.next/
+next-env.d.ts
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Env
+.env*
+!.env.example
+
+# Claude
+.claude/settings.local.json
