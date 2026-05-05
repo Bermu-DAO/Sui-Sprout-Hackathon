@@ -1,0 +1,9 @@
+export const PACKAGE_ID     = "0x69c30d3175ad2ec4e94275418a59cbc565c3655fa973a8d8605b003941f1d32d";
+export const SYSTEM_ID      = "0xe5415a4c9d60b65329da051d90d9d9e8f653268c8f56437719617d7270a7b810";
+export const TREASURY_ID    = "0x45988739d51990f8d17e352fc89c754e28da62fa94c923e8008fb452216aa9fb";
+export const USDC_TREASURY_CAP = "0xabc94b5ddf43b1a7ef449bdbdd9a0fea71e6c001d9d03dc65980474ec312d6d1";
+export const TAX_TREASURY_CAP  = "0x6767a98626a5e16529505ce3c9ff98755fed5b7f39222248ef6dfdc0fbc7d317";
+export const ADMIN_ID       = "0x2aa83c7901b45d58678fc68118e3688b34c640e6c90f95bad9fd86469a13f486";
+
+export const CLOCK_ID  = "0x6";
+export const RANDOM_ID = "0x8";
