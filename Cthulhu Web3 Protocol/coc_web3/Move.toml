@@ -1,0 +1,11 @@
+[package]
+name = "CoC_Web3_Protocol"
+version = "0.0.1"
+edition = "2024.beta"
+
+[dependencies]
+onchain_invoice = { local = "../sui_workshop_3/onchain_invoice" }
+SupraOracles = { git = "https://github.com/Entropy-Foundation/dora-interface", subdir = "supra/testnet/core", rev = "master" }
+[addresses]
+SupraOracles = "0x3fd25bdfab06b7e29a606fa2516655b48556ae8f1efda047a70ba929b2494919"
+onchain_invoice = "0x2ce854bbaabb8ea2569e7357c41831e9fba5a835afa7ed6a34d9424d7a2bd96c"
