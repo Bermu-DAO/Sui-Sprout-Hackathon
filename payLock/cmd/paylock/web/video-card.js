@@ -1,0 +1,117 @@
+import { html } from './lib.js';
+import { navigate, formatDate, formatSui, loadWallet } from './state.js';
+import { signForAuth, setAuthHeaders, isWalletConnected } from './wallet.js';
+
+export async function deleteVideo(id, suiObjectId, onDeleted) {
+  try {
+    // If the video is on-chain, delete it from the chain first.
+    if (suiObjectId && isWalletConnected()) {
+      const mod = await loadWallet();
+      await mod.deleteVideoOnChain(suiObjectId);
+    }
+
+    const headers = {};
+    if (isWalletConnected()) {
+      const auth = await signForAuth('delete', id);
+      setAuthHeaders(headers, auth);
+    }
+    const res = await fetch('/api/videos/' + encodeURIComponent(id), { method: 'DELETE', headers });
+    if (!res.ok && res.status !== 404) {
+      const data = await res.json().catch(() => ({}));
+      alert(data.error || 'Failed to delete video.');
+      return;
+    }
+    if (onDeleted) onDeleted();
+  } catch (err) {
+    alert('Failed to delete video: ' + err.message);
+  }
+}
+
+function shortAddr(addr) {
+  if (!addr || addr.length < 12) return addr || '';
+  return addr.slice(0, 6) + '...' + addr.slice(-4);
+}
+
+export function VideoCard({ video, showDelete, onDeleted, accessState }) {
+  const safeStatus = ['ready', 'processing', 'failed'].includes(video.status) ? video.status : 'failed';
+  const isPaid = video.price > 0;
+  const safeAccess = ['locked', 'unlocked', 'checking'].includes(accessState) ? accessState : null;
+  const accessLabel = safeAccess === 'checking'
+    ? 'Checking'
+    : safeAccess === 'unlocked'
+      ? 'Unlocked'
+      : safeAccess === 'locked'
+        ? 'Locked'
+        : '';
+
+  return html`
+    <div class="video-card">
+      <div class="video-thumb" style="cursor:pointer" onclick=${() => navigate('player', { id: video.id })}>
+        ${video.status === 'ready'
+          ? video.thumbnail_blob_url
+            ? html`
+                <img src=${video.thumbnail_blob_url} alt=${video.title || video.id}
+                  style="width:100%;height:100%;object-fit:cover;" />
+                <div class="play-overlay">\u25B6</div>
+              `
+            : video.preview_blob_url
+              ? html`
+                  <video src=${video.preview_blob_url} muted preload="metadata"
+                    style="width:100%;height:100%;object-fit:cover;pointer-events:none;" />
+                  <div class="play-overlay">\u25B6</div>
+                `
+              : html`<div class="play-overlay">\u25B6</div>`
+          : '\u2026'}
+      </div>
+      <div class="video-info">
+        <div class="video-id" style="cursor:pointer" onclick=${() => navigate('player', { id: video.id })}>
+          ${video.title || video.id}
+        </div>
+        <div class="video-meta" style="display:flex; flex-direction:column; align-items:flex-start; gap:0.4rem;">
+          <!-- Row 1: Date -->
+          <div style="display:flex; align-items:center; width:100%;">
+            <span>${formatDate(video.created_at)}</span>
+          </div>
+          <!-- Row 2: Owner -->
+          ${video.creator ? html`
+            <div style="display:flex; align-items:center; width:100%;">
+              <span>Owner: <a href=${'https://suiscan.xyz/testnet/account/' + video.creator} target="_blank" rel="noopener noreferrer"
+                onclick=${(e) => e.stopPropagation()}
+                style="font-family:monospace; color:var(--accent); text-decoration:none; border-bottom:1px dashed var(--accent);"
+                title=${video.creator}>
+                ${shortAddr(video.creator)}
+              </a></span>
+            </div>
+          ` : null}
+          <!-- Row 3: ID -->
+          <div style="display:flex; align-items:center; width:100%;">
+            ${video.sui_object_id
+              ? html`<span>Object ID: <a href=${'https://suiscan.xyz/testnet/object/' + video.sui_object_id} target="_blank" rel="noopener noreferrer"
+                  onclick=${(e) => e.stopPropagation()}
+                  style="font-family:monospace; color:var(--accent); text-decoration:none; border-bottom:1px dashed var(--accent);"
+                  title=${video.sui_object_id}>${shortAddr(video.sui_object_id)}</a></span>`
+              : html`<span style="font-family:monospace" title=${video.id}>ID: ${shortAddr(video.id)}</span>`
+            }
+          </div>
+          <!-- Row 4: Badges -->
+          <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; width:100%;">
+            <span class=${'status-badge ' + safeStatus}>${video.status}</span>
+            <span class=${isPaid ? 'price-badge paid' : 'price-badge free'}>
+              ${isPaid ? formatSui(video.price) + ' SUI' : 'Free'}
+            </span>
+            ${isPaid && safeAccess && html`
+              <span class=${'access-badge ' + safeAccess}>${accessLabel}</span>
+            `}
+          </div>
+        </div>
+      </div>
+      ${showDelete && html`
+        <div class="video-actions">
+          <button class="btn btn-sm btn-danger" onclick=${(e) => { e.stopPropagation(); deleteVideo(video.id, video.sui_object_id, onDeleted); }}>
+            Delete
+          </button>
+        </div>
+      `}
+    </div>
+  `;
+}

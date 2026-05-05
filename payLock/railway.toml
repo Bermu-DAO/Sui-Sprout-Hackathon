@@ -1,0 +1,6 @@
+[build]
+builder = "DOCKERFILE"
+
+[env]
+PAYLOCK_PORT = "${{PORT}}"
+PAYLOCK_DATA_DIR = "/data"
