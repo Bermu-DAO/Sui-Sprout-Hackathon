@@ -1,0 +1,53 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: cohortvault
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  web:
+    image: node:22
+    working_dir: /app
+    command: sh -lc "corepack enable && pnpm install && pnpm dev:web"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../:/app
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+
+  api:
+    image: python:3.12-slim
+    working_dir: /app
+    command: sh -lc "pip install -e apps/api && python -m app.migrate && python -m uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../../:/app
+    depends_on:
+      - postgres
+    environment:
+      COHORTVAULT_API_DATABASE_BACKEND: postgres
+      COHORTVAULT_API_DATABASE_URL: postgresql://postgres:postgres@postgres:5432/cohortvault
+      COHORTVAULT_API_WEB_ORIGIN: http://localhost:3000
+
+  worker:
+    image: python:3.12-slim
+    working_dir: /app
+    command: sh -lc "pip install -e apps/api && cd apps/worker && python -m worker.main"
+    volumes:
+      - ../../:/app
+    depends_on:
+      - postgres
+      - api
+    environment:
+      COHORTVAULT_API_DATABASE_BACKEND: postgres
+      COHORTVAULT_API_DATABASE_URL: postgresql://postgres:postgres@postgres:5432/cohortvault
+
+volumes:
+  postgres-data:

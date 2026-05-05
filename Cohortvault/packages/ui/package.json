@@ -1,0 +1,16 @@
+{
+  "name": "@cohortvault/ui",
+  "private": true,
+  "version": "0.1.0",
+  "main": "src/index.tsx",
+  "types": "src/index.tsx",
+  "dependencies": {
+    "react": "^19.1.0"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.8"
+  }
+}

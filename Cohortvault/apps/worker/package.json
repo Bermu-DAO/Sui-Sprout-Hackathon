@@ -1,0 +1,12 @@
+{
+  "name": "@cohortvault/worker",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "python -m worker.main",
+    "build": "python -m compileall worker",
+    "lint": "python -m compileall worker",
+    "typecheck": "python -m compileall worker"
+  }
+}
+

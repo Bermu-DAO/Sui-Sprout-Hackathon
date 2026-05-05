@@ -1,0 +1,23 @@
+{
+  "name": "cohortvault",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "dev:web": "pnpm --filter @cohortvault/web dev",
+    "dev:api": "pnpm --filter @cohortvault/api dev",
+    "dev:worker": "pnpm --filter @cohortvault/worker dev",
+    "migrate:api": "pnpm --filter @cohortvault/api migrate",
+    "cleanup:demo": "python scripts/cleanup_generated_workspaces.py",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.15",
+    "turbo": "^2.5.5",
+    "typescript": "^5.8.3"
+  }
+}
