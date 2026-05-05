@@ -1,0 +1,9 @@
+[package]
+name = "octopus"
+edition = "2024.beta"
+
+[dependencies]
+deepbook = { git = "https://github.com/MystenLabs/deepbookv3.git", subdir = "packages/deepbook", rev = "main" }
+
+[addresses]
+octopus = "0x0"

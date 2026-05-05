@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Claude Code
+.claude/
+.playwright-mcp/
+
+# Environment
+.env
+
+# SDK build outputs
+sdk/dist/
+relayer/dist/
+
+# Backup files
+*.backup
+.vercel
+.env*.local
+circuits/build/

@@ -1,0 +1,340 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #00d9ff;
+  --background: #050508;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Courier New', monospace, system-ui, -apple-system, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+  cursor: url('/images/tentacle.png') 16 16, auto;
+}
+
+/* Preload cursor images to prevent flickering */
+body::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: -9999;
+  background: url('/images/tentacle.png'), url('/images/tentacle_hover.png');
+}
+
+/* Custom cursor for interactive elements */
+button:hover,
+a:hover,
+.btn:hover,
+.tab-button:hover,
+input[type="text"]:hover,
+input[type="number"]:hover {
+  cursor: url('/images/tentacle_hover.png') 16 16, pointer !important;
+}
+
+/* Cyberpunk Grid Background with purple accent */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(0, 217, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(157, 0, 255, 0.025) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Removed scanline effect */
+
+@layer utilities {
+  .text-cyber {
+    text-shadow: 0 0 10px rgba(0, 217, 255, 0.8), 0 0 20px rgba(157, 0, 255, 0.3);
+  }
+
+  .clip-corner {
+    clip-path: polygon(0 0,
+        calc(100% - 15px) 0,
+        100% 15px,
+        100% 100%,
+        0 100%);
+  }
+
+  .clip-corner-both {
+    clip-path: polygon(15px 0,
+        calc(100% - 15px) 0,
+        100% 15px,
+        100% calc(100% - 15px),
+        calc(100% - 15px) 100%,
+        15px 100%,
+        0 calc(100% - 15px),
+        0 15px);
+  }
+
+  .clip-corner-small {
+    clip-path: polygon(0 0,
+        calc(100% - 4px) 0,
+        100% 4px,
+        100% 100%,
+        0 100%);
+  }
+}
+
+/* Override Mysten DApp-Kit styles to match Octopus theme */
+[data-dapp-kit] {
+  font-family: 'Courier New', monospace, system-ui, -apple-system, sans-serif !important;
+}
+
+/* Modal backgrounds */
+[data-dapp-kit] [role="dialog"] {
+  background: #050508 !important;
+  border: 2px solid rgba(0, 217, 255, 0.2) !important;
+}
+
+/* Wallet list items */
+[data-dapp-kit] button[data-wallet] {
+  background: transparent !important;
+  color: #00d9ff !important;
+  border: 1px solid rgba(0, 217, 255, 0.2) !important;
+}
+
+[data-dapp-kit] button[data-wallet]:hover {
+  background: rgba(0, 217, 255, 0.1) !important;
+  border-color: #00d9ff !important;
+}
+
+/* Connect button styling */
+[data-dapp-kit] button {
+  background: #0a0a0d !important;
+  color: #00d9ff !important;
+  border-color: #00d9ff !important;
+}
+
+[data-dapp-kit] button:hover {
+  background: rgba(0, 217, 255, 0.1) !important;
+}
+
+/* Dropdown menus */
+[data-dapp-kit] [role="menu"],
+[data-dapp-kit] [role="listbox"] {
+  background: #0a1a2a !important;
+  border: 1px solid rgba(0, 217, 255, 0.2) !important;
+}
+
+/* Menu items */
+[data-dapp-kit] [role="menuitem"],
+[data-dapp-kit] [role="option"] {
+  color: #00d9ff !important;
+}
+
+[data-dapp-kit] [role="menuitem"]:hover,
+[data-dapp-kit] [role="option"]:hover {
+  background: rgba(0, 217, 255, 0.1) !important;
+}
+
+/* Account info */
+[data-dapp-kit] [data-account-address] {
+  color: rgba(0, 217, 255, 0.7) !important;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-2.5 text-sm font-bold tracking-wider uppercase transition-all duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed clip-corner relative;
+  }
+
+  .btn-primary {
+    @apply btn border-2;
+    background-color: transparent !important;
+    color: #00d9ff !important;
+    border-color: #00d9ff !important;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: rgba(0, 217, 255, 0.1) !important;
+    border-color: #00d9ff !important;
+    box-shadow: 0 0 20px rgba(0, 217, 255, 0.6), 0 0 40px rgba(0, 136, 255, 0.4);
+  }
+
+  .btn-secondary {
+    @apply btn bg-transparent text-gray-400 border-2 border-gray-600 hover:border-cyber-blue hover:text-cyber-blue;
+  }
+
+  .btn-action {
+    @apply btn border-2;
+    background-color: transparent !important;
+    color: #9ca3af !important;
+    border-color: rgba(156, 163, 175, 0.4) !important;
+    box-shadow: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-action:hover:not(:disabled) {
+    color: #00d9ff !important;
+    border-color: rgba(0, 217, 255, 0.8) !important;
+    box-shadow: 0 0 15px rgba(0, 217, 255, 0.4), 0 0 25px rgba(0, 217, 255, 0.3);
+  }
+
+  .btn-danger {
+    @apply btn border-2;
+    background-color: transparent !important;
+    color: #ef4444 !important;
+    border-color: rgba(239, 68, 68, 0.5) !important;
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .btn-danger:hover:not(:disabled) {
+    color: #f87171 !important;
+    border-color: rgba(239, 68, 68, 0.8) !important;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4), 0 0 25px rgba(248, 113, 113, 0.3);
+  }
+
+  .input {
+    @apply block w-full bg-cyber-card-bg border-2 border-gray-700 text-cyber-blue px-4 py-2.5 text-sm font-mono focus:border-cyber-blue focus:outline-none focus:shadow-glow-sm transition-all duration-300;
+  }
+
+  /* Hide native number input spin buttons */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  /* Custom number input button styles */
+  .number-input-btn {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-cyber-blue/50;
+  }
+
+  .card {
+    @apply bg-cyber-card-bg border-2 border-gray-800 p-6 shadow-lg relative clip-corner-both;
+    background: linear-gradient(135deg, rgba(15, 15, 24, 0.92) 0%, rgba(10, 10, 15, 0.95) 50%, rgba(15, 10, 20, 0.93) 100%);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid rgba(0, 217, 255, 0.12);
+    border-right: 1px solid rgba(157, 0, 255, 0.08);
+    border-bottom: 1px solid rgba(157, 0, 255, 0.08);
+    clip-path: inherit;
+    pointer-events: none;
+  }
+
+  .card-glow {
+    @apply card border-cyber-blue shadow-glow;
+  }
+
+  .tab-button {
+    @apply px-4 py-3 text-sm font-bold tracking-wider uppercase transition-all duration-300 relative;
+  }
+
+  .tab-button::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00d9ff, #9d00ff, transparent);
+    transition: width 0.3s ease;
+  }
+
+  .tab-button.active::after {
+    width: 100%;
+  }
+}
+
+@keyframes spin-button-glow {
+  0% {
+    box-shadow:
+      inset 0 0 15px rgba(0, 217, 255, 0.5),
+      0 0 15px rgba(0, 217, 255, 0.6),
+      0 0 25px rgba(0, 136, 255, 0.4);
+  }
+
+  50% {
+    box-shadow:
+      inset 0 0 20px rgba(0, 217, 255, 0.7),
+      0 0 20px rgba(0, 217, 255, 0.8),
+      0 0 35px rgba(0, 136, 255, 0.6),
+      0 0 45px rgba(157, 0, 255, 0.4);
+  }
+
+  100% {
+    box-shadow:
+      inset 0 0 15px rgba(0, 217, 255, 0.5),
+      0 0 15px rgba(0, 217, 255, 0.6),
+      0 0 25px rgba(0, 136, 255, 0.4);
+  }
+}
+
+@keyframes progressFill {
+  0% {
+    width: 0%;
+    left: 0;
+  }
+  100% {
+    width: 100%;
+    left: 0;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    max-height: 0;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  100% {
+    max-height: 500px;
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    max-height: 500px;
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  100% {
+    max-height: 0;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
