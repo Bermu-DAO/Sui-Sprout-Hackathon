@@ -1,0 +1,117 @@
+"use client";
+
+import { useState } from 'react';
+import { useCurrentAccount, useSignAndExecuteTransaction } from '@mysten/dapp-kit';
+import { toast } from 'sonner';
+import { useQueryClient } from '@tanstack/react-query';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { usePoolData } from '@/hooks/usePoolData';
+import { useUserOCCoins } from '@/hooks/useUserOCCoins';
+import { buildFundReward } from '@/lib/transactions';
+import { SCALING_FACTOR } from '@/lib/constants';
+
+export function FundRewardForm() {
+  const currentAccount = useCurrentAccount();
+  const queryClient = useQueryClient();
+  const { mutate: signAndExecute } = useSignAndExecuteTransaction();
+  
+  const { data: poolData } = usePoolData();
+  const { data: userData } = useUserOCCoins();
+  
+  const [amount, setAmount] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const rewardBalanceDisplay = poolData ? (poolData.rewardBalance / Number(SCALING_FACTOR)).toLocaleString('en-US', { maximumFractionDigits: 4 }) : '0';
+  const userBalanceDisplay = userData ? (userData.totalBalance / Number(SCALING_FACTOR)).toLocaleString('en-US', { maximumFractionDigits: 4 }) : '0';
+
+  const handleFund = () => {
+    if (!currentAccount) {
+      toast.error('請先連接錢包');
+      return;
+    }
+
+    const numAmount = parseFloat(amount);
+    if (isNaN(numAmount) || numAmount <= 0) {
+      toast.error('請輸入有效的數量');
+      return;
+    }
+
+    if (!userData || !userData.ocCoins || userData.ocCoins.length === 0) {
+      toast.error('沒有可用的 OC 代幣');
+      return;
+    }
+
+    const userBalanceNum = userData.totalBalance / Number(SCALING_FACTOR);
+    if (numAmount > userBalanceNum) {
+      toast.error('餘額不足');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const amountScaled = (numAmount * Number(SCALING_FACTOR)).toString();
+      const tx = buildFundReward(userData.ocCoins[0].coinObjectId, amountScaled);
+      
+      signAndExecute({ transaction: tx }, {
+        onSuccess: () => {
+          toast.success(`成功注資 ${amount} OC！`);
+          setAmount('');
+          setTimeout(() => queryClient.invalidateQueries({ queryKey: ['pool'] }), 1500);
+          setTimeout(() => queryClient.invalidateQueries({ queryKey: ['userOCCoins'] }), 1500);
+        },
+        onError: (error) => {
+          toast.error(`注資失敗: ${error.message}`);
+        },
+        onSettled: () => {
+          setIsLoading(false);
+        }
+      });
+    } catch (e: any) {
+      toast.error(`發生錯誤: ${e.message}`);
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">💰 注資獎勵池</CardTitle>
+        <CardDescription>向協議獎勵池注入 OC 代幣</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="text-sm space-y-1">
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">當前獎勵池餘額:</span>
+            <span className="font-medium">{rewardBalanceDisplay} OC</span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">你的可用餘額:</span>
+            <span className="font-medium">{userBalanceDisplay} OC</span>
+          </div>
+        </div>
+        
+        <div className="space-y-2">
+          <Input
+            type="number"
+            placeholder="輸入注資數量 (OC)"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            disabled={isLoading || !currentAccount}
+            min="0"
+            step="0.01"
+          />
+        </div>
+
+        <Button 
+          className="w-full" 
+          onClick={handleFund} 
+          disabled={isLoading || !currentAccount}
+        >
+          {isLoading ? '處理中...' : '確認注資'}
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}

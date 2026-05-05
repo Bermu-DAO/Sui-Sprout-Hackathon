@@ -1,0 +1,114 @@
+"use client";
+
+import { useState } from 'react';
+import { useCurrentAccount, useSignAndExecuteTransaction } from '@mysten/dapp-kit';
+import { toast } from 'sonner';
+import { useQueryClient } from '@tanstack/react-query';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { buildUpdateOraclePrice } from '@/lib/transactions';
+
+export function UpdatePriceForm() {
+  const currentAccount = useCurrentAccount();
+  const queryClient = useQueryClient();
+  const { mutate: signAndExecute } = useSignAndExecuteTransaction();
+  
+  const [newPrice, setNewPrice] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const calculateAPY = (price: number) => {
+    const MIN_RATE = 500;   // 5%
+    const MAX_RATE = 2000;  // 20%
+    const MIN_PRICE = 0.5;
+    const MAX_PRICE = 5.0;
+
+    if (price >= MAX_PRICE) return MAX_RATE / 100;
+    if (price <= MIN_PRICE) return MIN_RATE / 100;
+
+    const rate = MIN_RATE + (price - MIN_PRICE) * (MAX_RATE - MIN_RATE) / (MAX_PRICE - MIN_PRICE);
+    return rate / 100;
+  };
+
+  const previewPrice = parseFloat(newPrice);
+  const isValidPrice = !isNaN(previewPrice) && previewPrice >= 0.1 && previewPrice <= 10;
+  const apyPreview = isValidPrice ? calculateAPY(previewPrice) : null;
+
+  const handleUpdatePrice = () => {
+    if (!currentAccount) {
+      toast.error('請先連接錢包');
+      return;
+    }
+
+    if (!isValidPrice) {
+      toast.error('請輸入有效的價格 (0.1 ~ 10 USD)');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const tx = buildUpdateOraclePrice(previewPrice);
+      
+      signAndExecute({ transaction: tx }, {
+        onSuccess: () => {
+          toast.success(`成功更新 OC 價格為 $${previewPrice.toFixed(4)}`);
+          setNewPrice('');
+          setTimeout(() => queryClient.invalidateQueries({ queryKey: ['pool'] }), 1500);
+        },
+        onError: (error) => {
+          toast.error(`更新失敗: ${error.message}`);
+        },
+        onSettled: () => {
+          setIsLoading(false);
+        }
+      });
+    } catch (e: any) {
+      toast.error(`發生錯誤: ${e.message}`);
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">📈 更新 OC 價格</CardTitle>
+        <CardDescription>更新系統預言機價格 (影響 APY)</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="text-sm space-y-1">
+          <div className="flex justify-between">
+            <span className="text-muted-foreground">當前目標價格:</span>
+            <span className="font-medium">$1.0000 USD</span>
+          </div>
+          <div className="flex justify-between min-h-[20px]">
+            <span className="text-muted-foreground">預計 APY 變化:</span>
+            <span className={apyPreview !== null ? "font-medium text-green-600 dark:text-green-400" : "text-muted-foreground"}>
+              {apyPreview !== null ? `${apyPreview.toFixed(2)}%` : '-'}
+            </span>
+          </div>
+        </div>
+        
+        <div className="space-y-2">
+          <Input
+            type="number"
+            placeholder="輸入新價格 (0.1 ~ 10 USD)"
+            value={newPrice}
+            onChange={(e) => setNewPrice(e.target.value)}
+            disabled={isLoading || !currentAccount}
+            min="0.1"
+            max="10"
+            step="0.01"
+          />
+        </div>
+
+        <Button 
+          className="w-full" 
+          onClick={handleUpdatePrice} 
+          disabled={isLoading || !currentAccount}
+        >
+          {isLoading ? '處理中...' : '確認更新價格'}
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
