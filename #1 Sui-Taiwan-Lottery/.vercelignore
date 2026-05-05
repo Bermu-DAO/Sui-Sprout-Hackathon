@@ -1,0 +1,21 @@
+# Local and build artifacts
+node_modules
+dist
+
+# Smart contract workspace and local debug output not needed by Vercel
+contracts
+lottery-*.txt
+onchain-invoice-publish.txt
+wallet-objects.json
+admin-*.json
+tx-*.json
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Git and editor files
+.git
+.vscode
+.idea
