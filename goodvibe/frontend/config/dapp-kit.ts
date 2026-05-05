@@ -1,0 +1,28 @@
+/**
+ * Sui dApp Kit 配置
+ * 使用官方 gRPC 作為主要節點，支援 mainnet / testnet
+ */
+import { createDAppKit } from '@mysten/dapp-kit-react';
+import { SuiGrpcClient } from '@mysten/sui/grpc';
+
+const GRPC_URLS: Record<string, string> = {
+  mainnet: 'https://fullnode.mainnet.sui.io:443',
+  testnet: 'https://fullnode.testnet.sui.io:443',
+};
+
+export const dAppKit = createDAppKit({
+  networks: ['mainnet', 'testnet'],
+  defaultNetwork: 'mainnet',
+  createClient: (network) =>
+    new SuiGrpcClient({
+      network,
+      baseUrl: GRPC_URLS[network] ?? GRPC_URLS.mainnet,
+    }),
+  autoConnect: true,
+});
+
+declare module '@mysten/dapp-kit-react' {
+  interface Register {
+    dAppKit: typeof dAppKit;
+  }
+}
