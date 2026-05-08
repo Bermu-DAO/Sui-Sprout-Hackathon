@@ -1,5 +1,9 @@
 # Octopus - On-Chain Transaction Obfuscation Protocol Underlying Sui
 
+## Description
+
+A privacy layer for Sui that lets users transact and DeFi without leaking amounts, counterparties, or chain-of-custody. Tokens deposited into a shared privacy pool become Groth16 ZK-SNARK commitments that hide both amount and token type; spends prove ownership without revealing which deposit moved. Nullifiers stop double-spends and a Merkle anonymity set keeps every interaction visually identical on-chain — Sui's transparent ledger gets a cryptographically-guaranteed cloak.
+
 **OCTOPUS** stands for **On-Chain Transaction Obfuscation Protocol Underlying Sui**.
 
 A privacy protocol implementation for the Sui blockchain, enabling shielded transactions using zero-knowledge proofs.

@@ -1,5 +1,9 @@
 # Sui Jackpot Market (MVP)
 
+## Description
+
+一個建立在 Sui 上的二元預測市場,首創「輸家大樂透(Lossless Lottery)」機制。每筆下注收 5% 手續費注入 Jackpot 池,同時自動鑄造一張 Invoice 抽獎號碼;預測失敗的玩家不再只是賠光退場,而能透過 Sui 鏈上隨機抽獎贏回整個獎池。把交易本身變成一場抽獎,讓「下注」這件事多一條翻盤的可能性。
+
 一個部署在 Sui 區塊鏈上的二元預測市場，融合「輸家大樂透 (Lossless Lottery)」機制。
 
 ## 功能特色

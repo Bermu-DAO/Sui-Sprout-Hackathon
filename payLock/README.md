@@ -1,5 +1,9 @@
 # PayLock — Decentralized Video Storage & Paywall on Sui
 
+## Description
+
+A Go backend that pairs Walrus storage with a Sui Move paywall to deliver fully decentralized video hosting. Videos are stored as Walrus blobs and served via HTTP redirects to the Walrus Aggregator; a Move contract gates paid content on-chain, while an embedded chain watcher keeps payment state in sync automatically. Optional FFmpeg pipelines handle preview clips, thumbnails, and faststart-optimised playback, all wrapped behind an embedded web UI.
+
 PayLock is a Go backend for decentralized video hosting. It stores video assets on [Walrus](https://walrus.xyz), serves playback via HTTP redirects to the Walrus Aggregator, and integrates with a Sui Move contract for on-chain paywalls. Includes optional FFmpeg-based preview/thumbnail generation, a chain watcher for automatic sync, and an embedded web UI.
 
 ## Features

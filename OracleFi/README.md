@@ -1,5 +1,9 @@
 # 🌊 OracleFi
 
+## Description
+
+A DeFi staking protocol on Sui where APY isn't a static knob — it's a live function of an on-chain oracle token price. The higher the price, the higher the yield, computed and settled transparently inside the Move contracts. Ships with a public faucet, wallet integration via @mysten/dapp-kit, an admin dashboard for pool management, and bilingual EN/ZH UI on a Next.js frontend. Submitted for the BermuDAO 2026 Hackathon.
+
 > **Dynamic APY Staking Protocol** — A DeFi staking protocol on Sui blockchain where APY is calculated from oracle token price.
 
 💻 **[Live Demo](https://oracle-fi-black.vercel.app/)** | 🎥 **[Video Demo](https://share.descript.com/view/X8sxeBBMrvO)** | 🏆 **BermuDAO Hackathon 2026**

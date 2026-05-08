@@ -1,6 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# sui client Online
+
+## Description
+
+A graphical, browser-based Sui client for people who'd rather not live in the CLI. Connect a wallet, run Move calls, query objects, and compose Programmable Transaction Blocks (PTBs) from a single unified panel — no `sui` binary, no terminal, no manual JSON wrangling required.
+
+The goal is to lower the barrier for everyone who needs to interact with Sui on a regular basis: developers prototyping a Move package, ops teams running scheduled admin calls, designers exploring on-chain state, or hackathon judges sanity-checking a submission.
+
+## Features
+
+- **Move calls** — pick a package + module + function and fill in arguments via a form
+- **Object explorer** — query owned and shared objects without juggling RPC payloads
+- **PTB composer** — chain multiple commands into a single Programmable Transaction Block, simulate, then sign
+- **Wallet integration** — sign with any wallet that speaks @mysten/dapp-kit
+- **Web-first** — works anywhere a browser does; no local install
 
 ## Getting Started
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 First, run the development server:
 

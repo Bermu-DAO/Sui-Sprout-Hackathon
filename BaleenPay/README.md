@@ -1,5 +1,9 @@
 # BaleenPay
 
+## Description
+
+A subscription-payment demo that turns merchant inflow into a yield-bearing asset. Customers pay in BrandUSD on a SaaS site; under the hood, USDC is minted into BrandUSD via StableLayer and routed straight into a USDC yield aggregator. Merchants monitor principal and accumulated returns from a dashboard, and can claim baseline yield as an entirely new revenue stream. Like a whale's baleen filtering plankton, BaleenPay quietly extracts value from every payment that flows through it.
+
 > Like the baleen of a whale filtering plankton, BaleenPay intercepts and activates the **Payment Float** of SaaS platforms — idle cash flows automatically generate yield through the underlying protocol.
 
 ## What It Does

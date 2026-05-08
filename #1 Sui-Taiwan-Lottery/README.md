@@ -1,5 +1,9 @@
 # Sui Taiwan Lottery
 
+## Description
+
+A testnet-friendly scratch-card lottery dApp on Sui that brings Taiwan-style 刮刮樂 fully on-chain. Buy tickets with an in-game TWD test token, scratch to reveal results, and let the Move contract settle every prize transparently — no off-chain trust required. The UX is built deliberately for hackathon reviewers: short feedback loops, clear state transitions, and SUI testnet gas keeps every interaction nearly free.
+
 Language:
 - English (this file)
 - Traditional Chinese: [README.zh-TW.md](README.zh-TW.md)

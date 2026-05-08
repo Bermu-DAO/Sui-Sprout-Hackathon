@@ -1,5 +1,9 @@
 # WanderLot
 
+## Description
+
+一個建立在 Sui 上的旅遊 GameFi dApp——每張票根,都是一張彩券、一個紀念,也是一筆鏈上足跡。在虛擬景點購買紀念品時,系統自動為每筆消費鑄造一張鏈上 Invoice,既可自己持有等開獎,也能存進共享發票池與其他旅人均分風險、共享獎勵。一年下來,所有 Invoice 累積成你的年度旅遊收據,既是回憶相簿也是公開可分享的鏈上履歷。
+
 > **Pool your luck. Share the reward.**
 
 WanderLot is a shared lottery pool built on **Sui Move**. Instead of buying individual lottery tickets with high variance, users deposit USDC into a collective pool. The pool purchases Invoice lottery tickets on everyone's behalf. When any pool ticket wins, the prize is distributed proportionally — same expected value, dramatically lower variance.

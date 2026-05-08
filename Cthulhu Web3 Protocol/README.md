@@ -1,5 +1,9 @@
 # 🐙 Cthulhu Web3 Protocol (CoC-W3P)
 
+## Description
+
+An experimental Web3 TRPG protocol on Sui that turns the trust pact between Keeper and players into transparent on-chain code. Dual-staking pins both sides to the table — ghost the campaign mid-session and your deposit is automatically redistributed to whoever stayed. Every d100 roll is decided by `sui::random`, killing any temptation for behind-the-screen manipulation. When an investigator's profile is finally burned, their lifetime stats are immortalised as a Soulbound Epitaph SBT — a permanent tattoo of every save, every fumble, and every brush with the abyss.
+
 > **"When you gaze into the abyss, the abyss is calculating your SAN points on the blockchain."**
 
 Playing Tabletop RPGs (like *Call of Cthulhu*) with strangers online often ends in frustration due to lack of trust, ghosting Keepers (KP), or players suddenly ditching the game mid-campaign. 

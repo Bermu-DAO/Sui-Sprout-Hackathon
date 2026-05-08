@@ -1,5 +1,9 @@
 # SPENDBACK
 
+## Description
+
+A cashback-style incentive layer for the Sui ecosystem. Connect a wallet and SpendBack auto-detects your recent on-chain activity via `queryTransactionBlocks`. Hit Record on any transaction to mint an Invoice NFT — the digest stays on-chain as verifiable proof, while the full receipt (balance changes, timestamp, tx type) ships to Walrus for decentralised storage. Each Invoice doubles as a lottery ticket: Sui's native randomness picks a winning Invoice number, and the holder claims the entire USDC prize pool in a single transaction. The more you transact, the more tickets you hold; the prize pool grows organically from recording fees.
+
 > Detect real on-chain transactions, record them as Invoice NFTs on Sui, store receipts on Walrus, and win lottery prizes.
 
 ---

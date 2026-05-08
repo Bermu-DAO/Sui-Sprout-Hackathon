@@ -1,5 +1,9 @@
 # CohortVault
 
+## Description
+
+A controlled AI workspace built for teams handling sensitive research, strategy, and credentials. Upload private materials into a workspace, run role-aware Secure Run workflows over them, delegate secrets to the worker without ever exposing those secrets to the browser, and inspect signed receipt v1 records together with full audit history for every workflow execution. The result is an AI surface where you can prove what ran, what data was touched, and who was allowed to see the output.
+
 CohortVault is a full-stack workspace for running AI workflows over sensitive documents with explicit access control, delegated secret usage, signed execution receipts, and review-safe artifacts.
 
 Originally built as a hackathon submission, the current repository is a runnable monorepo with a real Next.js frontend, FastAPI backend, Postgres persistence, and a polling worker for ingestion.

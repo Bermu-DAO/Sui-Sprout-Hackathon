@@ -1,5 +1,9 @@
 # Bermuda DAO — Mines GameFi on Sui
 
+## Description
+
+一場可驗公平的鏈上踩地雷冒險。玩家在 4×4 棋盤上逐格揭開,每一次點擊都讓倍率上升、風險也跟著放大——選擇隨時收手鎖定獎金,還是繼續挑戰更高回報?踩到地雷的瞬間本局歸零,但每一次心跳加速的抉擇都是純粹策略與膽識的較量。把童年回憶的踩地雷,重塑成計算風險的 GameFi 體驗。
+
 **線上網站：[https://bermu-dao-hackathon-project.vercel.app/](https://bermu-dao-hackathon-project.vercel.app/)**
 
 基於 Sui 區塊鏈的可驗公平性鏈上**踩地雷**遊戲。玩家連接 Sui 錢包，將 TSUI 或 USDC 存入局內餘額，在 4×4 的格子盤（含 5 顆地雷）上翻牌。隨時收手鎖定倍率，或繼續翻牌追求更高獎勵——踩到炸彈則本局結束、押注歸零。
